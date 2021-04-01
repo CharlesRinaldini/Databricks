@@ -112,4 +112,7 @@ spark.udf.register("truncUDF", truncLatLng)
 
 # COMMAND ----------
 
+key = "YOURGOOGLEMAPSAPIKEY"
 
+df = spark.createDataFrame([("123 Fake St, Springfield, 12345, USA",),("1000 N West Street, Suite 1200 Wilmington, DE 19801, USA",)], ["address"]).withColumn("geocoding", geocodeUDF(array(col("address"), lit(None), lit(None), lit(key))))
+df.display()
