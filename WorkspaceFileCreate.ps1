@@ -57,8 +57,8 @@ else {
         $Bytes = [System.Text.Encoding]::GetEncoding('UTF-8').GetBytes($fileContent)
         $encodedContent = [System.Convert]::ToBase64String($Bytes)        
 
-        $dbrsPutJson = '{ "path": "'+$deployPath+'", "content": "'+$encodedContent+'", "language": "AUTO", "overwrite": true, "format": "AUTO" }'
+        $workspaceImportJson = '{ "path": "'+$deployPath+'", "content": "'+$encodedContent+'", "language": "AUTO", "overwrite": true, "format": "AUTO" }'
 
-        Invoke-RestMethod -Uri $workspaceImportUri -Method POST -Headers $apiHeaders -Body $dbrsPutJson -UseBasicParsing
+        Invoke-RestMethod -Uri $workspaceImportUri -Method POST -Headers $apiHeaders -Body $workspaceImportJson -UseBasicParsing
     }
 }
