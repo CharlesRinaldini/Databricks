@@ -63,6 +63,7 @@ class sql_helper:
       now = datetime.now()
       self.databricksURL = dbrURL
       self.databricksTokenSecret = dbrTokenSecret
+      self.envName = envName
 
     except BaseException as e:
       if "Attribute `sparkContext` is not supported" in str(e):
