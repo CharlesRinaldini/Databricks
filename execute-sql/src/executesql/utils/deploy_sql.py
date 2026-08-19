@@ -121,7 +121,7 @@ class deploy_sql:
     sql = f"""
         SELECT COALESCE((
             SELECT CASE WHEN ScriptExecutionLogId IS NOT NULL THEN 1 ELSE 0 END
-            FROM dv_gold.sqldemo.script_execution_log
+            FROM {env}_gold.sqldemo.script_execution_log
             WHERE FileName = '{file_name}'
             AND ErrorMessage IS NULL
             ORDER BY ExecutionDateTime DESC
