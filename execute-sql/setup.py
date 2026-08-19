@@ -18,18 +18,18 @@ import edw
 local_version = datetime.datetime.utcnow().strftime("%Y%m%d.%H%M%S")
 
 setup(
-    name="edw",
+    name="executesql",
     # We use timestamp as Local version identifier (https://peps.python.org/pep-0440/#local-version-identifiers.)
     # to ensure that changes to wheel package are picked up when used on all-purpose clusters
-    version=edw.__version__ + "+" + local_version,
+    version=executesql.__version__ + "+" + local_version,
     url="https://databricks.com",
     author="rinaldc@colas.com",
-    description="wheel file based on edw/src",
+    description="wheel file based on executesql/src",
     packages=find_packages(where="./src"),
     package_dir={"": "src"},
     entry_points={
         "packages": [
-            "main=edw.main:main",
+            "main=executesql.main:main",
         ],
     },
     install_requires=[
