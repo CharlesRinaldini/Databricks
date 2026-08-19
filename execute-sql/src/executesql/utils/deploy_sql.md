@@ -9,6 +9,7 @@ When `deploy_sql` is instantiated, it:
 1. Reads the `ENV` environment variable.
 2. Loads `config/<ENV>-config.json` from the project root.
 3. Reads the `envConfig` values for the environment name, Databricks URL, token, HTTP path, and host.
+   - Best practice: not store token in config but fetch token using secret stored in config or ENV var
 4. Stores those connection values on the instance for use by the deployment methods.
 
 The module's `main()` method obtains `ENV` again, creates a `deploy_sql` instance, gets the Databricks host, HTTP path, and token, and calls `run_scripts()` with the `schema` directory as its working folder. The current `__main__` block uses a local absolute Windows path, so that path must be changed or made configurable when the utility runs elsewhere.
