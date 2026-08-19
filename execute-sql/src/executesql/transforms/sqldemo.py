@@ -1,13 +1,3 @@
-#################################################################
-# Filename: dim_account_transforms.py
-# Author: Prachin Soparkar
-# Date: Jun 15, 2025
-# Usage: Used by tran_gold_edw_dim_account notebook
-#          
-# Version | Author              | Date        | Description
-# 1.0     | Prachin Soparkar    | 2025-08-05  | FIN-88: Initial
-# 2.0     | Prachin Soparkar    | 2026-02-05  | Next-381 Add column subaccount
-#################################################################
 import sys
 import os
 from pathlib import Path
