@@ -289,4 +289,4 @@ def main(workingFolder):
     deployer.run_scripts(dbHost, dbHTTPPath, dbToken, workingFolder, env)
 
 if __name__ == "__main__":
-    sys.exit(main("C:\\Users\\17202\\sources\\github\\Databricks\\execute-sql\\schema\\"))
+    sys.exit(main("C:\\Users\\176017\\sources\\github\\Databricks\\execute-sql\\schema"))

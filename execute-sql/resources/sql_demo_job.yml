@@ -16,23 +16,6 @@ resources:
           notebook_task:
             notebook_path: ../src/demo.ipynb
             source: WORKSPACE
-          job_cluster_key: demo_cluster
-
-      job_clusters:
-        - job_cluster_key: demo_cluster
-          new_cluster:
-            spark_version: 15.4.x-scala2.12
-            node_type_id: Standard_D4ps_v6
-            spark_conf:
-              spark.databricks.cluster.profile: singleNode
-              spark.master: local[*, 4]
-            spark_env_vars:
-              ENV: ${var.environment}
-            azure_attributes:
-              first_on_demand: 1
-              availability: ON_DEMAND_AZURE
-              spot_bid_max_price: -1
-            num_workers: 0
-            data_security_mode: SINGLE_USER
-            custom_tags:
-              ResourceClass: SingleNode
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
