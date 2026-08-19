@@ -1,6 +1,0 @@
-variables:
-  stg_job_vars:
-    type: complex
-    default:
-      core_dims_schedule: "0 30 6,10,14,18 ? * * *"
-      facts_schedule: "0 0 7,11,15,19 ? * * *"

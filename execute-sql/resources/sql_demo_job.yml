@@ -1,25 +1,25 @@
 # Use https://www.freeformatter.com/cron-expression-generator-quartz.html to figure out cron expressions
 resources:
   jobs:
-    edw_facts_job:
-      name: EDW_Facts
+    sql_demo_job:
+      name: Demo SQL Job
       schedule:
-        quartz_cron_expression: ${var.facts_schedule}
+        quartz_cron_expression: ${var.sql_demo_schedule}
         timezone_id: America/Denver
 
       email_notifications:
         on_failure:
-          - ERDWTeam@groupecolas.com
+          - rinaldini.charles@gmail.com
 
       tasks:
-        - task_key: fact_accountbalancedetail
+        - task_key: run_notebook
           notebook_task:
-            notebook_path: ../src/tran_gold_edw_fact_accountbalancedetail.ipynb
+            notebook_path: ../src/demo.ipynb
             source: WORKSPACE
-          job_cluster_key: edw_facts_cluster
+          job_cluster_key: demo_cluster
 
       job_clusters:
-        - job_cluster_key: edw_facts_cluster
+        - job_cluster_key: demo_cluster
           new_cluster:
             spark_version: 15.4.x-scala2.12
             node_type_id: Standard_D4ps_v6

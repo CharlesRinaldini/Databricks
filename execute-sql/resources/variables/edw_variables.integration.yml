@@ -1,6 +1,0 @@
-variables:
-  int_job_vars:
-    type: complex
-    default:
-      core_dims_schedule: "0 30 7 ? * * *"
-      facts_schedule: "0 30 8 ? * * *"

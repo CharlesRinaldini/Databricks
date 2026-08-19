@@ -20,20 +20,10 @@ class sqldemo(sql_helper):
   def __init__(self):
     super().__init__()
     spark = self.setSpark()    
-    if self.getEnvName() == 'dv':
-      spark.conf.set("spark.databricks.remoteFiltering.blockSelfJoins", "false")    
 
   def getDataFrame(self):
     envName = self.getEnvName()
     spark = self.getSpark()
 
-    df = spark.sql(f"""SELECT
-          accountid as accountNumber
-          , objectAccount as objectAccountNumber
-          , coalesce(nullif(CategoryCodeGL027, ''), '00') as profitandLossGroupingCode
-          , am.subsidiary as subaccount
-          , current_timestamp() as createDateTime
-          , current_timestamp() as updateDateTime
-      FROM {envName}_silver.jde.vwAccountMaster AS am
-       """)
+    df = spark.sql(f"SELECT * FROM {envName}_gold.sqldemo.demo_table")
     return df

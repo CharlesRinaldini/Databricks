@@ -1,6 +1,0 @@
-variables:
-  pd_job_vars:
-    type: complex
-    default:
-      core_dims_schedule: "0 38/20 4-21 ? * * *"
-      facts_schedule: "0 2/3 4-23 ? * * *"
