@@ -24,21 +24,31 @@ The module's `main()` method obtains `ENV` again, creates a `deploy_sql` instanc
 The expected directory structure is:
 
 ```text
-schema/
-└── <catalog>/
-    └── <schema>/
-        └── <numbered object type>.<object name>/
+###.schema/
+└── ###.<catalog>/
+    └── ###.<schema>/
+        └── 100.schemas/
+            └── <SQL script files>
+        └── 200.tables/
+            └── <SQL script files>
+        └── 300.views/
+            └── <SQL script files>
+        └── 400.functions/
+            └── <SQL script files>
+        └── 500.proceduress/
+            └── <SQL script files>
+        └── 900.scripts/
             └── <SQL script files>
 ```
 
-For example, the bundle contains object directories such as `100.schemas`, `200.tables`, `300.views`, and `900.scripts`. The function processes each level in sorted order:
+For example, the bundle contains object directories such as `100.schemas`, `200.tables`, `300.views`, and `900.scripts`. The function processes each level in sorted order to account for dependencies between objects:
 
 1. It derives lowercase and uppercase forms of the supplied environment name.
 2. It selects catalog directories under `workingFolder`. If `catalogFilter` is non-empty, only directory names containing that substring are selected.
 3. For every selected catalog, it selects schema directories. `schemaFilter` is applied the same way.
 4. It visits every object directory in sorted order and converts the numeric prefix before the first period to `objectType`.
 5. It enables execution-log checking for object types `>= 900`. These are treated as rerunnable deployment scripts that should execute only once after a successful prior run.
-6. It identifies views using the range `300 <= objectType < 400`.
+6. It identifies views using the range `300 <= objectType <= 399`.
 7. For every file in an object directory, it reads the SQL and replaces these tokens:
    - `{env}` and `{envName}` with the lowercase environment name
    - `{envUpper}` and `{envNameUpper}` with the uppercase environment name
