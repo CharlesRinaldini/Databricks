@@ -1,0 +1,107 @@
+# This is a Databricks asset bundle definition for edw.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: edw
+  uuid: eae3660c-f0c2-433c-b00a-46a45fff8f05
+
+include:
+  - resources/variables/*.yml
+  - resources/*.yml
+
+variables:
+  environment:
+    default: "dv"
+  core_dims_schedule:
+    default: ${var.dv_job_vars.core_dims_schedule}
+  facts_schedule:
+    default: ${var.dv_job_vars.facts_schedule}
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-2298532312930614.14.azuredatabricks.net
+    variables:
+      environment: "dv"
+      core_dims_schedule: ${var.dv_job_vars.core_dims_schedule}
+      facts_schedule: ${var.dv_job_vars.facts_schedule}
+      
+  dev-agent:
+    # Schedule jobs to run in DV as agent
+    mode: production
+    workspace:
+      host: https://adb-2298532312930614.14.azuredatabricks.net
+      root_path: /Workspace/${bundle.name}/
+    variables:
+      environment: "dv"
+      core_dims_schedule: ${var.dv_job_vars.core_dims_schedule}
+      facts_schedule: ${var.dv_job_vars.facts_schedule}
+    run_as:
+      service_principal_name: 917a169b-8e59-4b9a-8d64-7340e3d12759
+    permissions:
+      - group_name: GSAAD-AZDGA-DV-Databricks-DevOps-ERDW-QA-Teams
+        level: CAN_MANAGE
+      - service_principal_name: 917a169b-8e59-4b9a-8d64-7340e3d12759
+        level: CAN_MANAGE
+      
+  integration:
+    mode: production
+    workspace:
+      host: https://adb-2017889358846456.16.azuredatabricks.net
+      root_path: /Workspace/${bundle.name}/
+    variables:
+      environment: "ci"
+      core_dims_schedule: ${var.int_job_vars.core_dims_schedule}
+      facts_schedule: ${var.int_job_vars.facts_schedule}
+    presets:
+      trigger_pause_status: PAUSED
+    run_as:
+      service_principal_name: 6ae702d2-c210-4a78-97d0-ed21a54e8f94
+    permissions:
+      - group_name: GSAAD-AZDGA-DV-Databricks-DevOps-ERDW-QA-Teams
+        level: CAN_MANAGE
+      - service_principal_name: 6ae702d2-c210-4a78-97d0-ed21a54e8f94
+        level: CAN_MANAGE
+
+  staging:
+    mode: production
+    git: 
+      branch: staging
+    workspace:
+      host: https://adb-1244177056184640.0.azuredatabricks.net
+      root_path: /Workspace/${bundle.name}/
+    variables:
+      environment: "py"
+      core_dims_schedule: ${var.stg_job_vars.core_dims_schedule}
+      facts_schedule: ${var.stg_job_vars.facts_schedule}
+    run_as:
+      service_principal_name: 8d771785-0f27-4377-9dff-fe256f9148f7
+    permissions:
+      - group_name: GSAAD-AZDGA-PY-Databricks-DevOps-ERDW-QA-Teams
+        level: CAN_VIEW
+      - service_principal_name: 8d771785-0f27-4377-9dff-fe256f9148f7
+        level: CAN_MANAGE
+
+  prod:
+    mode: production
+    git:
+      branch: main
+    workspace:
+      host: https://adb-4149863039342474.14.azuredatabricks.net
+      root_path: /Workspace/${bundle.name}/
+    variables:
+      environment: "pd"
+      core_dims_schedule: ${var.pd_job_vars.core_dims_schedule}
+      facts_schedule: ${var.pd_job_vars.facts_schedule}
+    run_as:
+      service_principal_name: 0b3094d8-aaf7-4f22-aa96-8162611a3e3c
+    permissions:
+      - group_name: GSAAD-AZDGA-PD-Databricks-DevOps-ERDW-QA-Teams
+        level: CAN_VIEW
+      - service_principal_name: 0b3094d8-aaf7-4f22-aa96-8162611a3e3c
+        level: CAN_MANAGE
